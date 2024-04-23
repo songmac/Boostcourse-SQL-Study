@@ -1,31 +1,30 @@
 USE PRACTICE;
 
 
-/***************데이터 조회(SELECT)***************/
-
+-- 데이터 조회(SELECT)
 /* 1. CUSTOMER 테이블의 가입연도별 및 지역별 회원수를 조회하시오.*/
 /* FROM절 / GROUP BY절 / SELECT절 / YEAR 및 COUNT 함수 활용 */
 
 SELECT  YEAR(JOIN_DATE) AS 가입연도
-		,ADDR
+		    ,ADDR
         ,COUNT(MEM_NO) AS 회원수
   FROM  CUSTOMER
  GROUP
     BY  YEAR(JOIN_DATE)
-		,ADDR;
+		    ,ADDR;
   
   
 /* 2. (1) 명령어에서 성별이 남성회원 조건을 추가한 뒤, 회원수가 50명 이상인 조건을 추가하시오.*/
 /* WHERE절 / HAVING절 활용 */
   
 SELECT  YEAR(JOIN_DATE) AS 가입연도
-		,ADDR
+		    ,ADDR
         ,COUNT(MEM_NO) AS 회원수
   FROM  CUSTOMER
  WHERE  GENDER = 'MAN'
  GROUP
     BY  YEAR(JOIN_DATE)
-		,ADDR
+		    ,ADDR
 HAVING  COUNT(MEM_NO) > 50;
 
 
@@ -33,16 +32,16 @@ HAVING  COUNT(MEM_NO) > 50;
 /* ORDER BY절 활용 */
 
 SELECT  YEAR(JOIN_DATE) AS 가입연도
-		,ADDR
+		    ,ADDR
         ,COUNT(MEM_NO) AS 회원수
   FROM  CUSTOMER
  WHERE  GENDER = 'MAN'
  GROUP
     BY  YEAR(JOIN_DATE)
-		,ADDR
+		    ,ADDR
 HAVING  COUNT(MEM_NO) > 50
  ORDER
-	BY  COUNT(MEM_NO) DESC;  
+	  BY  COUNT(MEM_NO) DESC;  
     
     
     
@@ -62,7 +61,7 @@ SELECT  *
 /* GROUP BY절 / SUM 함수 활용*/
 
 SELECT  B.BRAND
-		,SUM(SALES_QTY) AS 판매수량
+		    ,SUM(SALES_QTY) AS 판매수량
   FROM  SALES AS A
   LEFT
   JOIN  PRODUCT AS B
@@ -91,10 +90,10 @@ SELECT  COUNT(A.MEM_NO)
 SELECT  *
   FROM  (
 		SELECT  PRODUCT_CODE
-				,SUM(SALES_QTY) AS 판매수량
+				    ,SUM(SALES_QTY) AS 판매수량
 		  FROM  SALES
 		 GROUP
-			BY  PRODUCT_CODE
+			  BY  PRODUCT_CODE
 		)AS A;
 
 
@@ -104,10 +103,10 @@ SELECT  *
 SELECT  *
   FROM  (
 		SELECT  PRODUCT_CODE
-				,SUM(SALES_QTY) AS 판매수량
+				    ,SUM(SALES_QTY) AS 판매수량
 		  FROM  SALES
 		 GROUP
-			BY  PRODUCT_CODE
+			  BY  PRODUCT_CODE
 		)AS A
   LEFT
   JOIN  PRODUCT AS B
@@ -118,18 +117,18 @@ SELECT  *
 /* GROUP BY절 / SUM 함수 활용*/
 
 SELECT  CATEGORY
-		,BRAND
+		    ,BRAND
         ,SUM(판매수량) AS 판매수량
   FROM  (
 		SELECT  PRODUCT_CODE
-				,SUM(SALES_QTY) AS 판매수량
+				    ,SUM(SALES_QTY) AS 판매수량
 		  FROM  SALES
 		 GROUP
-			BY  PRODUCT_CODE
+			  BY  PRODUCT_CODE
 		)AS A
   LEFT
   JOIN  PRODUCT AS B
     ON  A.PRODUCT_CODE = B.PRODUCT_CODE
  GROUP
     BY  CATEGORY
-		,BRAND;
+		    ,BRAND;
